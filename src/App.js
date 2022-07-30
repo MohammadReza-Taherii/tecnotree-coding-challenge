@@ -7,6 +7,7 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    localStorage.removeItem("dogImages");
     getPosts();
   }, []);
 
