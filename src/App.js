@@ -8,6 +8,7 @@ function App() {
   const [loading, setLaoding] = useState(true);
 
   useEffect(() => {
+    localStorage.removeItem("dogImages");
     getPosts();
   }, []);
 
