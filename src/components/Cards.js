@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 function Cards({ imgUrl, onAddToFavorites }) {
   return (
     <Card>
-      <Card.Img variant="top" src={imgUrl} />
+      <Card.Img variant="top" src={imgUrl} className="card-img" />
       <Card.Body>
         <Button variant="primary" onClick={onAddToFavorites}>
           add to favorites
