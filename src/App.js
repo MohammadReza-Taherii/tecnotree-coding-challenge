@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 
 function App() {
   const [data, setData] = useState([]);
+  const [loading, setLaoding] = useState(true);
 
   useEffect(() => {
     getPosts();
@@ -15,6 +16,7 @@ function App() {
   }
 
   const getPosts = async () => {
+    setLaoding(true);
     let initialData = [];
 
     for (let i = 0; i < 6; i++) {
@@ -23,7 +25,11 @@ function App() {
 
       if (isImage(response.url)) {
         initialData.push(response);
-        if (i == 5) setData(initialData);
+        if (i == 5) {
+          setData(initialData);
+
+          setLaoding(false);
+        }
       } else i--;
     }
   };
@@ -44,9 +50,10 @@ function App() {
   };
 
   return (
-    <Container>
+    <Container className="pt-5">
       <Row>
-        {data.length > 0 &&
+        {!loading ? (
+          data.length > 0 &&
           data.map((item, index) => (
             <Col md={4} sm={6} className="mb-4" key={index}>
               <Cards
@@ -54,14 +61,21 @@ function App() {
                 onAddToFavorites={() => addToFavoritesHandler(item)}
               />
             </Col>
-          ))}
+          ))
+        ) : (
+          <Col xs={12} className="d-flex justify-content-center">
+            Loading...
+          </Col>
+        )}
       </Row>
       <Row>
-        <Col>
-          <Button variant="success" onClick={refreshHandler}>
-            Refresh
-          </Button>
-        </Col>
+        {!loading && (
+          <Col className="d-flex justify-content-center">
+            <Button variant="success" onClick={refreshHandler}>
+              Refresh
+            </Button>
+          </Col>
+        )}
       </Row>
     </Container>
   );
